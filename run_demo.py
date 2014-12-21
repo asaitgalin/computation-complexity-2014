@@ -50,7 +50,7 @@ def get_max_element_frequency(X, F):
 
 @timeit
 def find_coverage_simplex(X, F, freq):
-    variables = [pulp.LpVariable("x{}".format(i), -1, 1) for i in range(1, len(F) + 1)]
+    variables = [pulp.LpVariable("x{}".format(i), 0, 1) for i in range(1, len(F) + 1)]
     p = pulp.LpProblem(sense = pulp.LpMinimize)
     p += sum(variables)
 
