@@ -6,7 +6,7 @@ import or_benchmark_reader
 from utils import timeit
 import sc_greedy
 from collections import defaultdict
-from pulp import *
+import pulp
 import matplotlib.pyplot as plt
 import numpy as np
 import sc_generator
@@ -50,8 +50,8 @@ def get_max_element_frequency(X, F):
 
 @timeit
 def find_coverage_simplex(X, F, freq):
-    variables = [LpVariable("x{}".format(i), 0, 1) for i in range(1, len(F) + 1)]
-    p = LpProblem(sense = LpMinimize)
+    variables = [pulp.LpVariable("x{}".format(i), -1, 1) for i in range(1, len(F) + 1)]
+    p = pulp.LpProblem(sense = pulp.LpMinimize)
     p += sum(variables)
 
     for x in X:
@@ -64,12 +64,12 @@ def find_coverage_simplex(X, F, freq):
                     s += variables[subset_index]
         p += s >= 1
 
-    status = p.solve(GLPK(msg=0))
+    status = p.solve(pulp.GLPK(msg=0))
     if DEBUG:
-        print([value(v) for v in variables])
+        print([pulp.value(v) for v in variables])
     subsets = map(
         lambda x: 1 if x >= 1.0 / freq else 0,
-        [value(v) for v in variables]
+        [pulp.value(v) for v in variables]
     )
     return sum(subsets)
 

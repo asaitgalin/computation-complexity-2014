@@ -3,7 +3,7 @@
 
 import sys, os
 
-''' This file provides BenchmarkDataReader class for set cover problem benchmark
+''' This file provides BenchmarkDataReader class for set cover problem benchmark (msc format)
     Input benchmark file format:
 
     First line has form "p set U S", where U, S - natural numbers
